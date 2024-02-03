@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="col-xs-10 col-sm-6 col-md-6">
+    <div class="card card-style mb-2">
+        <div class="card-body">
+            <div class="chart-container" style="position: relative;">
+                <canvas id="earnings_and_buy_ins"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block javascript %}
+<script>
+    Chart.scaleService.updateScaleDefaults('linear', {
+        ticks: {}
+    });
+
+    let labels = JSON.parse({{ dates_label | tojson }});
+    let earnings = JSON.parse({{ earnings | tojson }});
+    let buy_ins = JSON.parse({{ total_buy_ins | tojson }});
+
+    new Chart(document.getElementById("earnings_and_buy_ins"), {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Earnings Over Time",
+                data: earnings,
+                fill: false,
+                borderColor: "rgb(255, 99, 132)",
+                lineTension: 0.1
+            },
+            {
+                label: "Total Buy-ins",
+                data: buy_ins,
+                fill: false,
+                borderColor: "rgb(0, 123, 255)",
+                lineTension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                }
+            }
+        }
+    });
+
+</script>
+{% endblock %}
+{% endblock %}
+
+
+
+
