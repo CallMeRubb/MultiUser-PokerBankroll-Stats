@@ -10,10 +10,10 @@
 <div class="col-xs-10 col-sm-6 col-md-6 ml-auto mr-auto add-menu-container">
     <div class="card card-style mb-2">
         <div class="card-body">
-            <form action="" method="POST">
+            <form action="" method="POST" id="expenses-form">
                 {{ form.csrf_token() }}
                 <fieldset class="form-group">
-                    <legend class="mb-4">Enter Todays Poker Game Stats</legend>
+                    <legend class="mb-4">Enter Today's Poker Game Stats</legend>
                     <div class="form-group">
                         {{ form.game_type.label(class="form-control-label") }}
                         {{ form.game_type(class="form-control form-control-sm") }}
@@ -47,6 +47,18 @@
                         {% endif %}
                     </div>
 
+                    <div class="form-group">
+                        {{ form.custom_date.label }}
+                        {{ form.custom_date() }}
+                    </div>
+
+                    <div id="custom-date-input" style="display: none;">
+                        <div class="form-group">
+                            {{ form.custom_date_input.label(class="form-control-label") }}
+                            {{ form.custom_date_input(class="form-control form-control-sm") }}
+                        </div>
+                    </div>
+
                     <div class="form-group border-bottom pb-3">
                         {{ form.submit(class="btn btn-outline-info")}}
                     </div>
@@ -55,5 +67,33 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const customDateCheckbox = document.querySelector('#custom_date');
+        const customDateInput = document.querySelector('#custom-date-input');
+
+        // Initially hide the custom date input field
+        customDateInput.style.display = 'none';
+
+        customDateCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                customDateInput.style.display = 'block';
+            } else {
+                customDateInput.style.display = 'none';
+            }
+        });
+
+        // Intercept form submission
+        const form = document.getElementById('expenses-form');
+        form.addEventListener('submit', function(event) {
+            if (!customDateCheckbox.checked) {
+                // If custom date is not checked, populate current date
+                const currentDate = new Date().toISOString().split('T')[0];
+                document.getElementById('custom_date_input').value = currentDate;
+            }
+        });
+    });
+</script>
 
 {% endblock %}

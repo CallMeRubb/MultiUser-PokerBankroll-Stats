@@ -7,6 +7,26 @@
             <div class="chart-container" style="position: relative;">
                 <canvas id="earnings_and_buy_ins"></canvas>
             </div>
+
+            <!-- New Box Title moved underneath the graph -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card card-style">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Earnings</h5>
+                            <p class="card-text">{{ total_earnings }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card card-style">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Buy-ins</h5>
+                            <p class="card-text">{{ total_buy_in }}</p>  <!-- Display total buy-ins summarized -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -52,7 +72,3 @@
 </script>
 {% endblock %}
 {% endblock %}
-
-
-
-
