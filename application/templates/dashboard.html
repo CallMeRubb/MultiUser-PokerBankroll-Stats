@@ -1,28 +1,95 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="col-xs-10 col-sm-6 col-md-6">
-    <div class="card card-style mb-2">
-        <div class="card-body">
-            <div class="chart-container" style="position: relative;">
-                <canvas id="earnings_and_buy_ins"></canvas>
-            </div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-10 px-0">
+            <div class="card card-style mb-2">
+                <div class="card-body">
+                    <div class="chart-container" style="position: relative;">
+                        <canvas id="earnings_and_buy_ins"></canvas>
+                    </div>
 
-            <!-- New Box Title moved underneath the graph -->
-            <div class="row mt-4">
-                <div class="col-md-6">
-                    <div class="card card-style">
-                        <div class="card-body">
-                            <h5 class="card-title">Total Earnings</h5>
-                            <p class="card-text">{{ total_earnings }}</p>
+                    <!-- New Box Title moved underneath the graph -->
+                    <div class="row mt-4">
+                        <div class="col-md-4">
+                            <div class="card card-style">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Earnings</h5>
+                                    <p class="card-text">{{ total_earnings }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card card-style">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Buy-ins</h5>
+                                    <p class="card-text">{{ total_buy_in }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card card-style">
+                                <div class="card-body">
+                                    <h5 class="card-title">Average Buy-in</h5>
+                                    <p class="card-text">{{ average_buy_in }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card card-style">
-                        <div class="card-body">
-                            <h5 class="card-title">Total Buy-ins</h5>
-                            <p class="card-text">{{ total_buy_in }}</p>  <!-- Display total buy-ins summarized -->
+
+                    <div class="row mt-4">
+                        <div class="col-md-4">
+                            <div class="card card-style">
+                                <div class="card-body">
+                                    <h5 class="card-title">Sit and Go Earnings</h5>
+                                    <p class="card-text">{{ sit_and_go_earnings }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card card-style">
+                                <div class="card-body">
+                                    <h5 class="card-title">Tournament Earnings</h5>
+                                    <p class="card-text">{{ tournament_earnings }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card card-style">
+                                <div class="card-body">
+                                    <h5 class="card-title">Games Played</h5>
+                                    <p class="card-text">{{ num_games_played }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Display "Hours Played", "Dollar Each Hour", and "Average Monthly Hours Played" on their own row -->
+                    <div class="row mt-4">
+                        <div class="col-md-4">
+                            <div class="card card-style">
+                                <div class="card-body">
+                                    <h5 class="card-title">Hours Played</h5>
+                                    <p class="card-text">{{ '%0.1f'|format(average_hours_played) }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card card-style">
+                                <div class="card-body">
+                                    <h5 class="card-title">Money Each Hour</h5>
+                                    <p class="card-text">{{ (total_earnings / average_hours_played)|round(2) if average_hours_played != 0 else 'N/A' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card card-style">
+                                <div class="card-body">
+                                    <h5 class="card-title">Average Monthly Hours</h5>
+                                    <p class="card-text">{{ '%0.1f'|format(average_monthly_hours_played) }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -70,5 +137,51 @@
     });
 
 </script>
+
+<style>
+    @media only screen and (max-width: 767px) {
+        .container {
+            max-width: 600px; /* Adjust the maximum width of the container */
+            padding: 0 !important; /* Remove any padding */
+            margin: 0 auto !important; /* Center the container horizontally */
+        }
+
+        /* Remove padding for the specific column */
+        .col-md-4 {
+            padding: 0 !important;
+        }
+
+        /* Adjust the size of the regular card boxes */
+        .row:not(.chart-container) > .col-md-4 {
+            width: calc(34.5% - 5px); /* Adjust the width to make two cards fit in a row with reduced space between them */
+            margin-right: 0 !important; /* Remove right margin to eliminate space between card boxes */
+            margin-bottom: 10px !important; /* Add some space below card boxes */
+        }
+
+        /* Make the text inside the card boxes a little bigger */
+        .card.card-style .card-body {
+            padding: 10px !important; /* Adjust the padding inside the card body */
+        }
+
+        .card.card-style .card-body h5.card-title,
+        .card.card-style .card-body p.card-text {
+            font-size: 14px; /* Set the font size to 14px for smaller screens */
+        }
+    }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {% endblock %}
 {% endblock %}

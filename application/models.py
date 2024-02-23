@@ -8,6 +8,7 @@ class IncomeExpenses(db.Model):
     buy_in = db.Column(db.Integer, nullable=False)
     total_pot = db.Column(db.Integer, nullable=False)
     earnings = db.Column(db.Integer, nullable=True)  # New column for earnings
+    hours_played = db.Column(db.Float, nullable=True)  # New column for hours played
 
     def __str__(self):
         return str(self.id)
